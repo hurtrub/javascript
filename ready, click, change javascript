@@ -1,0 +1,55 @@
+/*****finished******/
+	
+	$( document ).ready(function() {
+    $.ajax({
+		type: 'post',
+		url: 'php/finishedread.php',
+		data: {
+		  date_finished: $("#date_finished").val()
+		}
+	}).done(function(data){
+		$("#finishedplandata").html(data)
+	})
+    })
+	
+	$(document).on('change','#date_finished', function(){
+	$("#monthfinished").val('')	
+	$.ajax({
+		type: 'post',
+		url: 'php/finishedfilter.php',
+		data: {
+		  date_finished: $("#date_finished").val(),
+		  monthfinished: $("#monthfinished").val()
+		}
+	}).done(function(data){
+		$("#finishedplandata").html(data)
+	})
+	})
+	
+	$(document).on('change','#monthfinished', function(){
+	$("#date_finished").val('')
+	$.ajax({
+		type: 'post',
+		url: 'php/finishedfilter.php',
+		data: {
+		  date_finished: $("#date_finished").val(),
+		  monthfinished: $("#monthfinished").val()
+		}
+	}).done(function(data){
+		$("#finishedplandata").html(data)
+	})
+	})
+	
+	$(document).on('click','.finished_view', function(){
+	$.ajax({
+		type: 'post',
+		url: 'php/finished_viewmodal.php',
+		data: {
+				id: $(this).attr('id')
+			}
+	}).done(function(data){
+		$(".modal-title").html('Update Record')
+		$(".modal-body").html(data)
+		$(".modal").modal('show')
+	})
+	})
